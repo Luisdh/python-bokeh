@@ -11,6 +11,7 @@ from graph import *
 graph_data = Graph()
 
 graph_data.debug_create_test_data()
+graph_data.bfs(graph_data.vertexes[0])
 
 N = len(graph_data.vertexes)
 node_indices = list(range(N))
