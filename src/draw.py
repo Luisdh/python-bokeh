@@ -2,8 +2,8 @@
 import math
 
 from bokeh.io import show, output_file
-from bokeh.plotting import figure
-from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval
+from bokeh.plotting import figure, ColumnDataSource
+from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval, LabelSet, Label
 from bokeh.palettes import Spectral8
 
 from graph import *
@@ -52,7 +52,13 @@ graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)
 
 plot.renderers.append(graph)
 
+value = [v.value for v in graph_data.vertexes]
 
+label_source = ColumnDataSource(data=dict(x=x, y=y, v=value))
+
+labels = LabelSet(x='x', y='y', text='v', level='glyph', x_offset=5, y_offset=5, source=label_source, render_mode='canvas')
+
+plot.add_layout(labels)
 
 output_file('graph.html')
 show(plot)
