@@ -3,7 +3,7 @@ import math
 
 from bokeh.io import show, output_file
 from bokeh.plotting import figure, ColumnDataSource
-from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval, LabelSet, Label
+from bokeh.models import GraphRenderer, StaticLayoutProvider, Circle, LabelSet, Label
 from bokeh.palettes import Spectral8
 
 from graph import *
@@ -27,7 +27,7 @@ graph = GraphRenderer()
 
 graph.node_renderer.data_source.add(node_indices, 'index')
 graph.node_renderer.data_source.add(color_list, 'color')
-graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
+graph.node_renderer.glyph = Circle(size=30, fill_color='color')
 
 
 start_indexes = []
@@ -57,7 +57,8 @@ value = [v.value for v in graph_data.vertexes]
 
 label_source = ColumnDataSource(data=dict(x=x, y=y, v=value))
 
-labels = LabelSet(x='x', y='y', text='v', level='glyph', x_offset=5, y_offset=5, source=label_source, render_mode='canvas')
+labels = LabelSet(x='x', y='y', text='v', level='overlay',
+        source=label_source, render_mode='canvas', text_align='center', text_baseline='middle')
 
 plot.add_layout(labels)
 
